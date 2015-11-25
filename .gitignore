@@ -1,0 +1,35 @@
+.*
+!.gitignore
+
+*.py[co]
+
+gaeutils
+flask
+werkzeug
+wtforms
+click
+blinker
+cloudstorage
+mapreduce
+httplib2
+oauthlib
+flask_oauthlib
+bs4
+itsdangerous.py
+timeshift.py
+cloudstorage
+
+# Packages
+*.egg
+*.egg-info
+dist
+build
+eggs
+parts
+bin
+var
+sdist
+develop-eggs
+
+# Installer logs
+pip-log.txt
