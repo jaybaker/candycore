@@ -3,6 +3,7 @@ from logging import debug, info, error
 import uuid
 import base64
 
+from google.appengine.api import urlfetch
 from google.appengine.ext.ndb import blobstore
 
 import cloudstorage as gcs
@@ -20,11 +21,17 @@ def store_file(bucket, datastream, filename=None, mimetype='image/jpeg', dev=Fal
     fname = bucket + '/%s' % filename
 
     # write the file/data
-    gcs_file = gcs.open(fname, 'w', content_type=mimetype, 
-            options={'x-goog-acl': 'public-read', 
-                'Cache-Control': 'public, max-age=31536000'})
-    gcs_file.write(datastream.stream.read())
-    gcs_file.close()
+    def store_it():
+        gcs_file = gcs.open(fname, 'w', content_type=mimetype, 
+                options={'x-goog-acl': 'public-read', 
+                    'Cache-Control': 'public, max-age=31536000'})
+        gcs_file.write(datastream.stream.read())
+        gcs_file.close()
+
+    try:
+        store_it()
+    except urlfetch.DeadlineExceededError:
+        store_it()
 
     # get the url
     if dev:

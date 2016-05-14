@@ -55,6 +55,7 @@ def save(data, bucket=None, gallery='default'):
     stream = StringIO.StringIO(image_data)
     stream.stream = stream
     fname = utils.generate_key() + '.jpg'
+
     bucketname = utils.store_file(bucket, stream, 
             filename=fname, mimetype='image/jpeg', dev=gaeutils.App.dev)
     blobkey = utils.gs_blobkey(bucketname)
