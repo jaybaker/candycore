@@ -49,15 +49,19 @@ class Image(ndb.Expando):
 
 ## save
 
-def save(data, bucket=None, gallery='default'):
+def save(data, bucket=None, gallery='default', mimetype='image/jpeg', 
+        encoded=True):
     gallery_key = ndb.Key(Gallery, gallery)
-    image_data = base64.b64decode(data)
+    if encoded:
+        image_data = base64.b64decode(data)
+    else:
+        image_data = data
     stream = StringIO.StringIO(image_data)
     stream.stream = stream
     fname = utils.generate_key() + '.jpg'
 
     bucketname = utils.store_file(bucket, stream, 
-            filename=fname, mimetype='image/jpeg', dev=gaeutils.App.dev)
+            filename=fname, mimetype=mimetype, dev=gaeutils.App.dev)
     blobkey = utils.gs_blobkey(bucketname)
     serving_url = None
     try:
