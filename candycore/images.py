@@ -8,8 +8,8 @@ from google.appengine.ext import ndb
 
 import gaeutils
 
-from .. import utils
-from ..location import Location
+import utils
+from location import Location
 
 ## models
 
