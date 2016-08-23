@@ -63,6 +63,13 @@ def save(data, bucket=None, gallery='default', size=None,
     bucketname = utils.store_file(bucket, stream, 
             filename=fname, mimetype=mimetype, dev=gaeutils.App.dev)
     blobkey = utils.gs_blobkey(bucketname)
+
+    # if size is None, use src image size 
+    if size is None:
+        _img = images.Image(image_data=image_data)
+        size = min(max(_img.width, _img.height), images.IMG_SERVING_SIZES_LIMIT)
+
+
     serving_url = None
     try:
         serving_url = images.get_serving_url(blobkey, size=size)
