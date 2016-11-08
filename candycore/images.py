@@ -50,7 +50,7 @@ class Image(ndb.Expando):
 ## save
 
 def save(data, bucket=None, gallery='default', size=None, 
-        mimetype='image/jpeg', encoded=True):
+        mimetype='image/jpeg', encoded=True, secure_url=True):
     gallery_key = ndb.Key(Gallery, gallery)
     if encoded:
         image_data = base64.b64decode(data)
@@ -72,9 +72,9 @@ def save(data, bucket=None, gallery='default', size=None,
 
     serving_url = None
     try:
-        serving_url = images.get_serving_url(blobkey, size=size)
+        serving_url = images.get_serving_url(blobkey, size=size, secure_url=secure_url)
     except images.TransformationError as e:
-        serving_url = images.get_serving_url(blobkey, size=size) # retry on random transformation error
+        serving_url = images.get_serving_url(blobkey, size=size, secure_url=secure_url) # retry on random transformation error
     img = Image(gallery=gallery_key, bucketname=bucketname, 
             serve_url=serving_url)
     return img
