@@ -4,13 +4,11 @@ from google.appengine.api import urlfetch
 
 import json
 
-import settings
-
 PARSE_URL = 'https://api.parse.com/1/push'
 FBASE_URL = 'https://fcm.googleapis.com/fcm/send'
 
-def notify(topic, msg, priority='high'):
-    headers = {"Authorization": "key=%s" % (settings.FBASE['api_key']),
+def notify(topic, msg, key, priority='high'):
+    headers = {"Authorization": "key=%s" % key,
                "Content-Type": "application/json"}
 
     to = '/topics/%s' % topic
