@@ -58,7 +58,7 @@ def save(data, bucket=None, gallery='default', size=None,
         image_data = data
     stream = StringIO.StringIO(image_data)
     stream.stream = stream
-    fname = utils.generate_key() + '.jpg'
+    fname = utils.generate_key() + ('.jpg' if 'jpg' in mimetype else '.png')
 
     bucketname = utils.store_file(bucket, stream, 
             filename=fname, mimetype=mimetype, dev=gaeutils.App.dev)

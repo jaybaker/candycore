@@ -8,6 +8,11 @@ class Location(ndb.Model):
     geo     = ndb.GeoPtProperty(indexed=False)
     ipaddress = ndb.StringProperty('ip')
 
+    @property
+    def is_gdpr_eu(self):
+        from . import GDPR_EU
+        return self.country and self.country.upper() in GDPR_EU
+
 def from_request(req):
     headers = req.headers
     loc = Location(country=headers.get('X-AppEngine-Country'),
@@ -20,3 +25,13 @@ def from_request(req):
     if hasattr(req, 'remote_addr'):
         loc.ipaddress = req.remote_addr
     return loc
+
+def is_gdrp_eu(request):
+    """ Is this request from gdpr eu?
+    This is a shortcut so client doesn't have to instantiate 
+    location object.
+
+    request is a flask request like object
+    """
+    loc = from_request(request)
+    return loc.is_gdpr_eu
