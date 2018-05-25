@@ -24,12 +24,13 @@ EU = (
         'MT',
         'NL',
         'PL',
-        'PT'.
+        'PT',
         'RO',
         'SK',
-        'SL'.
+        'SL',
         'ES',
         'SE',
+        'GB',
         'UK',
 
     )
