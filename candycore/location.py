@@ -26,7 +26,7 @@ def from_request(req):
         loc.ipaddress = req.remote_addr
     return loc
 
-def is_gdrp_eu(request):
+def is_gdpr_eu(request):
     """ Is this request from gdpr eu?
     This is a shortcut so client doesn't have to instantiate 
     location object.
