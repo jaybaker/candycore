@@ -37,6 +37,7 @@ EU = (
 
 # countries in EU for GDPR purposes
 GDPR_EU = EU + (
+        'EC', # Ecuador
         'IS',
         'LI',
         'NO',
